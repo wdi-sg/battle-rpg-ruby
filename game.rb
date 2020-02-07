@@ -20,8 +20,12 @@ class MonsterList
     @monster = monster
   end
 end
-monsters =[Monster.new , Monster.new ,Monster.new]
-
+monsters =[]
+puts "how many monsters should be in the game?"
+monster_count = gets.chomp
+(monster_count.to_i).times do
+monsters << Monster.new
+end
 while monsters.length > 0 do
   puts "Which monster you want to attack?"
   monsters.map.with_index do |monster, i|
