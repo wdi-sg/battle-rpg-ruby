@@ -15,14 +15,20 @@ end
 class Player
 end
 
-monster = Monster.new
+monsterArray = [Monster.new, Monster.new, Monster.new ]
 
-
-while monster.get_hp > 0 do
+while monsterArray.length > 0 do
+  monsterArray.each_with_index do |monster, index|
+    if monster.get_hp <= 0
+      monsterArray.delete_at index
+    end
+    puts "monster " + index.to_s + "has HP: " + monster.get_hp.to_s
+  end
+  puts "which monster would you like to attack?"
+  index = gets.chomp.to_i
   puts "how much damage do you want to do?"
-  input = gets.chomp
-  monster.set_hp input.to_i
-  puts "monster has damage: "+monster.get_hp.to_s
+  input = gets.chomp.to_i
+  monsterArray[index].set_hp input
 end
 
 puts "done with game!"
