@@ -60,6 +60,7 @@ class MonsterTruck < Monster
     puts "The other monsters come out of the truck and start fighting!"
     @monster_array.each do |monster|
       $monster_array << monster
+      monster.roar
     end
   end
 
@@ -69,7 +70,7 @@ class Player
 
 end
 
-
+# The $ means it is a global variable. So very dangerous to use
 $monster_array = [MonsterTruck.new([Monster.new, Monster.new, Monster.new], "Monster Truck")]
 
 # puts "How many monsters would you like to fight?"
