@@ -1,5 +1,6 @@
 # battle-rpg-ruby
 
+![https://media.giphy.com/media/3oEjI1erPMTMBFmNHi/giphy.gif](https://media.giphy.com/media/3oEjI1erPMTMBFmNHi/giphy.gif)
 
 We'll create a turn based game that kills enemies.
 
