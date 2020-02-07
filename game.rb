@@ -19,7 +19,13 @@ monster1 = Monster.new
 monster2 = Monster.new
 monster3 = Monster.new
 
-monsters = [monster1, monster2, monster3]
+monsters = []
+
+puts "How many monsters should be in the game?"
+monster_count = gets.chomp.to_i
+ while monsters.length < monster_count
+  monsters.push(Monster.new)
+ end
 
 monsters.each_with_index do |monster, index|
   while monster.get_hp > 0
