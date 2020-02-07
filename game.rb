@@ -1,7 +1,7 @@
 class Monster
   # Initialise is called when you make a new monster
   # Monster.new(name)
-  def initialize(name='Mr. No Name Monster')
+  def initialize(name=$monster_names.sample)
     @hp = 10
     @name = name
   end
@@ -65,6 +65,8 @@ class MonsterTruck < Monster
   end
 
 end
+
+$monster_names = ["fancy bath slug", "figure-skating duck", "Frat Warrior drill sergeant", "ghastly organist", "gluttonous ghuol", "goblin conspirator", "Guy Made Of Bees", "Lumpy, the Sinister Sauceblob", "mutant rattlesnake"]
 
 class Player
 
