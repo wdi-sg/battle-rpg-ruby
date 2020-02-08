@@ -13,7 +13,7 @@ class Monster
 end
 
 class Truck
-  def initialize (hp)
+  def initialize(hp)
     @hp = hp
     @monsters = []
   end
@@ -46,8 +46,14 @@ puts "How many monsters should be in the game?"
 monster_count = gets.chomp.to_i
 
 truck = Truck.new(truckHP)
-
 truck.make_monsters(monster_count)
+
+while truck.get_hp > 0
+  puts "How much damage do you wanna do to the Monster Truck?"
+  truck_damage = gets.chomp.to_i
+  truck.set_hp(truck_damage)
+  puts "The truck took " + truck_damage.to_s + "! Remaining HP:" + truck.get_hp.to_s
+end
 
 truck.truck_monsters.each_with_index do |monster, index|
   while monster.get_hp > 0
