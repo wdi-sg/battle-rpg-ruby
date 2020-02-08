@@ -13,6 +13,17 @@ class Monster
 end
 
 class Player
+   def initialize
+    @hp = 1000
+  end
+
+  def get_hp
+    @hp
+  end
+
+  def set_hp(damage)
+    @hp = @hp - damage
+  end
 end
 
 class MonsterTruck
@@ -45,12 +56,14 @@ class MonsterTruck
     @monster.length
   end
 end
+
+player = Player.new
 truck = MonsterTruck.new
 puts "how many monsters should be in the game?"
 monster_count = gets.chomp
 truck.set_monsters(monster_count.to_i)
 
-while truck.total_monsters > 0 do
+while truck.total_monsters > 0 && player.get_hp > 0 do
   if truck.get_hp > 0
   puts "how much damage do you want to do to the monster truck?"
   truck_damage = gets.chomp.to_i
@@ -82,6 +95,14 @@ while truck.total_monsters > 0 do
     puts
   end
 end
+  if truck.total_monsters > 0 && player.get_hp > 0
+  player.set_hp rand(1..100)
+  puts "Player has damage :" + player.get_hp.to_s
+  end
 end
-
+ if truck.total_monsters <= 0
+  puts "Defeated all monsters"
+ else
+    puts "Player ran out of health"
+ end
 puts "done with game!"
