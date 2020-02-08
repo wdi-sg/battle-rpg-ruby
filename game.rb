@@ -8,8 +8,6 @@ class Monster
 
   def get_hp
       @hp
-      @monsters.each do |monster|
-       puts monsters.get_hp
   end
 
   def set_hp(damage)
@@ -25,29 +23,43 @@ class Monster
    @name = name
    end 
 
-end
+  end
 
-  monsters = [
-  Monster.new('monster1',10),
-  Monster.new('monster2',15),
-  Monster.new('monster3',20)
-  ]
+
  
+monsters = []
+ i = 0
+
+puts "how many monsters should be in the game?"
+monster_count = gets.chomp.to_i
+while i < monster_count do 
+  # puts i
+  monsters.push(Monster.new("monster"+i.to_s,10))
+    i += 1 
+  end
+
 
     monsters.each_with_index do |monster, index|
-      while monster.get_hp > 0
-      puts "which monster do you want to fight? monster1, monster2, or monster3?"
-      input_monster = gets.chomp.to_i
-  # result = monsters.find {|name| name.include?(input)}
-    # puts result
+      # while monster.get_hp > 0 do 
+      monster_id = ""
+      monsters.each_with_index do |monster, index|
+        if monster.get_hp > 0
+          monster_id = monster_id + index.to_s + ", "
+        end
       end
- 
+      
+        monster_id = monster_id[0...-2]
+        # removes the last 2 characters from the string
+      puts "which monster do you want to fight? Pick from the following options: "+ monster_id
+      input_monster = gets.chomp.to_i
+      while monsters[input_monster].get_hp > 0 do 
+        puts "how much damage do you want to do?"
+          damage = gets.chomp
+          monsters[input_monster].set_hp(damage.to_i) 
+          puts "monster has damage: "+damage
+          puts "Monster has remaining hp:" +monsters[input_monster].get_hp.to_s
+       end
 
-  puts "how much damage do you want to do?"
-  damage = gets.chomp
-  # monsters[input_monster].set_hp damage.to_i
-  # result.find {|hp| hp == input} 
-   puts "monster has damage: "+damage
+  
   end
 puts "done with game!"
-end
