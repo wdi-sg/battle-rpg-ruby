@@ -6,6 +6,7 @@ class Monster
     @name = name
     @min_damage = 2
     @max_damage = 5
+    @attack_string = " lunges wildly at "
   end
 
   # Define a function that a monster can do.
@@ -27,7 +28,7 @@ class Monster
   end
 
   def attack(enemy)
-    puts @name + " lunges wildly at " + enemy.get_name
+    puts @name + @attack_string + enemy.get_name
     damage_dealt = rand(@max_damage - @min_damage) + @min_damage
     enemy.take_damage(damage_dealt)
   end
@@ -46,10 +47,19 @@ class MonsterTruck < Monster
     @hp = 20
     @min_damage = 1
     @max_damage = 3
+    @attack_string = " revs its engine and tries to run over "
   end
 
   def how_many_inside
     @monster_array.length
+  end
+
+  def who_is_inside
+    monster_on_board = []
+    @monster_array.each do |monster|
+      monster_on_board << monster.get_name
+    end
+    puts "On board the monster truck are " + monster_on_board.join(", ")
   end
 
   def set_hp(damage)
@@ -79,6 +89,7 @@ end
 $monster_names = ["fancy bath slug", "figure-skating duck", "Frat Warrior drill sergeant", "ghastly organist", "gluttonous ghuol", "goblin conspirator", "Guy Made Of Bees", "Lumpy, the Sinister Sauceblob", "mutant rattlesnake"]
 
 class Player
+  attr_accessor :hp
   def initialize(name)
     @name = name
     @hp = 50
@@ -129,15 +140,18 @@ hero_name = gets.chomp
 player = Player.new(hero_name)
 
 puts "The Monster truck approaches"
+$monster_array[0].who_is_inside
+puts "----------------------------------------"
 $monster_array[0].on_board_roar
 
-while $monster_array.length > 0 do
+while $monster_array.length > 0 && player.hp > 0 do
   $monster_array.each_with_index do |monster, index|
     sleep 0.25
     puts "Monster index: " + index.to_s
     monster.put_hp
   end
-
+  player.report_hp
+  puts "----------------------------------------"
   puts "which monster would you like to attack?"
   index = gets.chomp.to_i
 
@@ -162,4 +176,8 @@ while $monster_array.length > 0 do
   puts
 end
 
-puts "YOU'RE WINNER!"
+if player.hp <= 0
+  puts "You lose! Game over"
+else
+  puts "YOU'RE WINNER!"
+end
