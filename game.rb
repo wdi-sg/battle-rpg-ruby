@@ -15,13 +15,27 @@ end
 class Player
 end
 
-monster = Monster.new
+class Truck
+  def initialize(monsters)
+    @monsters = monsters
+    @hp = 30
+  end
 
-monsters = [
-monster1 = Monster.new,
-monster2 = Monster.new,
-monster3 = Monster.new,
-]
+  def get_monsters
+    @monsters
+  end
+
+  def get_hp
+    @hp
+  end
+
+  def set_hp(damage)
+    @hp = @hp - damage
+  end
+
+end
+
+
 
 monsters = []
 
@@ -33,11 +47,26 @@ while index <= monster_count.to_i do
   index += 1
 end
 
+truck = Truck.new(monsters)
+
 def dealDamage(arr, monsterIndex, damage)
   arr[monsterIndex].set_hp(damage)
 end
 
-while monsters.length > 0 do
+while truck.get_hp > 0 do
+  puts "You are fighting a truck full of monsters! Destroy its armor!"
+  puts "How much damage do you want to do?"
+  input = gets.chomp
+  truck.set_hp(input.to_i)
+
+  puts "Remaining truck armor: #{truck.get_hp}"
+
+  if truck.get_hp <= 0
+    puts "Truck armor is destroyed! Time for monster meat!"
+  end
+end
+
+while monsters.length > 0 && truck.get_hp <= 0 do
   puts "You are fighting #{monsters.length} Monsters"
 
     if monsters.length > 1
