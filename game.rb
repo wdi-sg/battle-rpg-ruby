@@ -72,6 +72,7 @@ class MonsterTruck < Monster
 
   def on_board_roar
     @monster_array.each do |monster|
+      sleep 0.3
       monster.roar
     end
   end
@@ -81,6 +82,7 @@ class MonsterTruck < Monster
     puts "The other monsters come out of the truck and start fighting!"
     @monster_array.each do |monster|
       $monster_array << monster
+      sleep 0.3
       monster.roar
     end
   end
@@ -181,6 +183,7 @@ while $monster_array.length > 0 && player.hp > 0 do
     monster.attack(player)
   end
 
+  sleep 0.3
   puts
   puts "----------------------------------------"
   puts
