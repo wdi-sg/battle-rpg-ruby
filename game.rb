@@ -39,9 +39,20 @@ end
 end
 
 class Player
+  def initialize
+    @hp = 20
+  end
+  def get_hp
+    @hp
+  end
+  def set_hp(hp)
+    @hp -= hp
+  end
 end
 
 trucks = []
+
+player = Player.new
 
 puts "How many trucks do you wanna create?"
 num_of_trucks = gets.chomp.to_i
@@ -51,8 +62,6 @@ while num_of_trucks > trucks.length
   trucks.push(Truck.new(truckHP))
 end
 
-puts trucks.length
-
 trucks.each do |truck|
   truck.make_monsters
 end
@@ -60,8 +69,8 @@ end
 while trucks.length > 0 
   trucks.each_with_index do |truck, truck_index|
     puts "How much damage do you want to do to truck #{truck_index}?"
-    chosen_truck = gets.chomp.to_i
-    truck.set_hp(chosen_truck)
+    truck_damage = gets.chomp.to_i
+    truck.set_hp(truck_damage)
     if truck.get_hp <= 0
       puts "Truck destroyed! Monsters in truck: #{truck.truck_monsters.length}"
       while truck.truck_monsters.length > 0
@@ -75,6 +84,15 @@ while trucks.length > 0
             chosen_monster.set_hp(damage)
               if chosen_monster.get_hp > 0 
                 puts "Did #{damage} damage to monster #{chosen_monster_index}!"
+                player_damage = 2
+                player.set_hp(player_damage)
+                puts "Monster did #{player_damage} damage to you!"
+                puts "Player HP: #{player.get_hp}"
+                if player.get_hp <= 0
+                  puts "You ran out of HP! You lose!"
+                  puts "Game over!"
+                  return
+                end
               else
                 puts "Killed monster #{chosen_monster_index}!"
                 truck.truck_monsters.delete_at(chosen_monster_index)
