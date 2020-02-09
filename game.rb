@@ -1,3 +1,4 @@
+# Monster class
 class Monster
   # Initialise is called when you make a new monster
   # Monster.new(name)
@@ -38,7 +39,7 @@ class Monster
   end
 end
 
-# The monster truck carries monsters
+# The monster truck carries monsters, inherits from monsters
 class MonsterTruck < Monster
 
   def initialize(monster_array, name)
@@ -86,8 +87,10 @@ class MonsterTruck < Monster
 
 end
 
-$monster_names = ["fancy bath slug", "figure-skating duck", "Frat Warrior drill sergeant", "ghastly organist", "gluttonous ghuol", "goblin conspirator", "Guy Made Of Bees", "Lumpy, the Sinister Sauceblob", "mutant rattlesnake"]
+# Pure fluff, a list of names the monsters could be called.
+$monster_names = ["fancy bath slug", "figure-skating duck", "Frat Warrior drill sergeant", "ghastly organist", "gluttonous ghuol", "goblin conspirator", "Guy Made Of Bees", "Lumpy, the Sinister Sauceblob", "mutant rattlesnake", "Pifflehaus", "Dream Trawler", "Day9", "Teferi"]
 
+# Player has a sword for a weapon because why not.
 class Player
   attr_accessor :hp
   def initialize(name)
@@ -126,14 +129,20 @@ class Player
   end
 end
 
+# Loop through the monster array list to see if any have died. If they have, remove them from the array.
+def check_enemy_dead
+  $monster_array.each_with_index do |monster, index|
+    if monster.get_hp <= 0
+      puts monster.get_name + " has been defeated!"
+      $monster_array.delete_at index
+    end
+  end
+end
+
 # The $ means it is a global variable. So very dangerous to use
 $monster_array = [MonsterTruck.new([Monster.new, Monster.new, Monster.new], "Monster Truck")]
 
-# puts "How many monsters would you like to fight?"
-# input_number = gets.chomp.to_i
-# for i in 1..input_number do
-#   $monster_array << Monster.new
-# end
+# Begin the game here.
 
 puts "What is your name, hero"
 hero_name = gets.chomp
@@ -144,16 +153,17 @@ $monster_array[0].who_is_inside
 puts "----------------------------------------"
 $monster_array[0].on_board_roar
 
+# Game loop, endless combat phase until the monsters are all dead or the player is defeated
 while $monster_array.length > 0 && player.hp > 0 do
   $monster_array.each_with_index do |monster, index|
     sleep 0.25
-    puts "Monster index: " + index.to_s
+    puts "Monster index: " + (index + 1).to_s
     monster.put_hp
   end
   player.report_hp
   puts "----------------------------------------"
   puts "which monster would you like to attack?"
-  index = gets.chomp.to_i
+  index = gets.chomp.to_i - 1
 
 
   if index > $monster_array.length - 1 || index < 0
@@ -161,16 +171,16 @@ while $monster_array.length > 0 && player.hp > 0 do
     next
   end
 
-  player.attack($monster_array[0])
-  # $monster_array[index].set_hp input
+  player.attack $monster_array[index]
+  sleep 0.25
+
+  check_enemy_dead
+
   $monster_array.each_with_index do |monster, index|
-    if monster.get_hp <= 0
-      puts monster.get_name + " has been defeated!"
-      $monster_array.delete_at index
-    else
-      monster.attack(player)
-    end
+    sleep 0.25
+    monster.attack(player)
   end
+
   puts
   puts "----------------------------------------"
   puts
