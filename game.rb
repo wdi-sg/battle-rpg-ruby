@@ -12,16 +12,36 @@ class Monster
   end
 end
 
-
-
 class Player
+end
+
+class TruckExample
+  # Instance can still be created without initialize
+  attr_accessor(:name,:monsters,:hp) 
+end
+
+class Truck
+  def initialize(no_of_monsters,hp)
+    monster_array = Array.new(no_of_monsters.to_i,nil)
+    for i in 0...monster_array.length do
+      monster_array[i] = Monster.new
+    end
+    @monsters = monster_array
+    @hp = hp 
+  end
+
+  attr_accessor(:monsters,:hp)
+
+  def set_hp(damage)
+    @hp = @hp - damage
+  end
+
 end
 
 
 
 
-
-
+####################################################
 def check_if_all_are_dead(monsters)
   all_dead = true
 
@@ -47,19 +67,24 @@ def remove_dead_monsters(monsters)
 
 end
 
-
-
 puts "How many monsters do you want to fight"
 monster_count = gets.chomp
 
-monsters = Array.new(monster_count.to_i,nil)
+truck = Truck.new(monster_count.to_i, 10)
 
-# .. means up to and equal, ... means not equal 
-for x in 0...monsters.length do
-  monsters[x] = Monster.new
-end
 
-while check_if_all_are_dead(monsters) == false do
+
+
+
+
+
+
+
+
+
+
+
+while check_if_all_are_dead(truck.monsters) == false do
   
   puts "Which monster do you want to attack?"
   monster_to_attack = gets.chomp
@@ -68,18 +93,46 @@ while check_if_all_are_dead(monsters) == false do
   puts "how much damage do you want to do?"
   input = gets.chomp
 
-  #Subtract HP from chosen monster's health
-  monsters[monster_to_attack_int].set_hp input.to_i
 
-  remove_dead_monsters(monsters)
+  if truck.hp > 1
+    truck.set_hp input.to_i
+  else
+    #Subtract HP from chosen monster's health
+    truck.monsters[monster_to_attack_int].set_hp input.to_i
+    remove_dead_monsters(truck.monsters)
+  end
+
+  #Formatting
+  puts " "  
+  puts " "
+
+  puts "Displaying game stats..."
+
+  #Display Game Stats
+
+  puts " "  
+  puts " "
+
+  #Display Truck Hp 
+
+  if truck.hp > 0
+    puts "You have not defeated the truck! "
+    puts "Attacking truck for #{input} damage"
+    puts "Truck HP is now #{truck.hp}"
+  else
+    puts "Truck has been taken down! Damaging Monsters ..."
+  end
+
+  puts " "  
+  puts " "
 
   #Display Monsters HP
   puts "Showing monster HP..."  
-  for c in 0...monsters.length do
-    if monsters[c] == nil
+  for c in 0...truck.monsters.length do
+    if truck.monsters[c] == nil
       puts "Monster#{c + 1} is dead!"
     else
-      puts "Monster#{c + 1} HP = #{monsters[c].get_hp}"
+      puts "Monster#{c + 1} HP = #{truck.monsters[c].get_hp}"
     end  
   end
 
