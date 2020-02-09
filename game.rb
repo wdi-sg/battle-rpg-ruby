@@ -29,22 +29,24 @@ class Truck
   def make_monsters
     ran_num = rand(2..7)
     while @monsters.length < ran_num
-    @monsters.push(Monster.new)
-  end
+      @monsters.push(Monster.new)
+    end
 
-  def truck_monsters
-    @monsters
+    def truck_monsters
+      @monsters
+    end
   end
-end
 end
 
 class Player
   def initialize
     @hp = 20
   end
+
   def get_hp
     @hp
   end
+
   def set_hp(hp)
     @hp -= hp
   end
@@ -66,8 +68,11 @@ trucks.each do |truck|
   truck.make_monsters
 end
 
-while trucks.length > 0 
+while trucks.length > 0
   trucks.each_with_index do |truck, truck_index|
+    trucks.each_with_index do |truck, index|
+      puts "Truck #{index} Remaining hp: #{truck.get_hp}"
+    end
     puts "How much damage do you want to do to truck #{truck_index}?"
     truck_damage = gets.chomp.to_i
     truck.set_hp(truck_damage)
@@ -76,32 +81,35 @@ while trucks.length > 0
       while truck.truck_monsters.length > 0
         truck.truck_monsters.each_with_index do |monster, monster_index|
           while monster.get_hp > 0
+            truck.truck_monsters.each_with_index do |monster, monster_index|
+              puts "Monster #{monster_index} Remaining hp:#{monster.get_hp}"
+            end
             puts "Which monster do you want to attack?"
             chosen_monster_index = gets.chomp.to_i
             chosen_monster = truck.truck_monsters[chosen_monster_index]
             puts "How much damage do you want to do?"
             damage = gets.chomp.to_i
             chosen_monster.set_hp(damage)
-              if chosen_monster.get_hp > 0 
-                puts "Did #{damage} damage to monster #{chosen_monster_index}!"
-                player_damage = 2
-                player.set_hp(player_damage)
-                puts "Monster did #{player_damage} damage to you!"
-                puts "Player HP: #{player.get_hp}"
-                if player.get_hp <= 0
-                  puts "You ran out of HP! You lose!"
-                  puts "Game over!"
-                  return
-                end
-              else
-                puts "Killed monster #{chosen_monster_index}!"
-                truck.truck_monsters.delete_at(chosen_monster_index)
-                puts "Remaining monsters: #{truck.truck_monsters.length}"
-                if truck.truck_monsters.length == 0
-                  trucks.delete_at(truck_index)
-                  puts "Truck #{truck_index} was deleted! Remaining trucks: #{trucks.length}"
-                end
-             end
+            if chosen_monster.get_hp > 0
+              puts "Did #{damage} damage to monster #{chosen_monster_index}!"
+              player_damage = 2
+              player.set_hp(player_damage)
+              puts "Monster did #{player_damage} damage to you!"
+              puts "Player HP: #{player.get_hp}"
+              if player.get_hp <= 0
+                puts "You ran out of HP! You lose!"
+                puts "Game over!"
+                return
+              end
+            else
+              puts "Killed monster #{chosen_monster_index}!"
+              truck.truck_monsters.delete_at(chosen_monster_index)
+              puts "Remaining monsters: #{truck.truck_monsters.length}"
+              if truck.truck_monsters.length == 0
+                trucks.delete_at(truck_index)
+                puts "Truck #{truck_index} was deleted! Remaining trucks: #{trucks.length}"
+              end
+            end
           end
         end
       end
@@ -132,7 +140,7 @@ end
 #         puts "You killed monster #{chosen_monster}!"
 #         truck.truck_monsters.delete_at(chosen_monster)
 #         puts "Remaining monsters: #{truck.truck_monsters.length}"
-#       else 
+#       else
 #         puts "You did #{damage} damage to monster #{chosen_monster}!"
 #       end
 #       truck.truck_monsters.each_with_index do |monster, index|
