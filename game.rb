@@ -13,6 +13,17 @@ class Monster
 end
 
 class Player
+  def initialize
+    @hp = 30
+  end
+
+  def get_hp
+    @hp
+  end
+
+  def set_hp(damage)
+    @hp = @hp - damage
+  end
 end
 
 class Truck
@@ -47,6 +58,9 @@ def dealDamage(arr, monsterIndex, damage)
   arr[monsterIndex].set_hp(damage)
 end
 
+# initialize player
+player = Player.new
+
 # initialize truck
 truck = Truck.new
 # create monster instances
@@ -55,7 +69,7 @@ monster_count = gets.chomp
 truck.spawn_monsters(monster_count)
 
 # destroy truck before attacking monsters
-while truck.get_hp > 0
+while truck.get_hp > 0 && player.get_hp > 0
   puts "You are fighting a truck full of monsters! Destroy its armor!"
   puts "How much damage do you want to do?"
   input = gets.chomp
@@ -66,11 +80,24 @@ while truck.get_hp > 0
   if truck.get_hp <= 0
     puts "Truck armor is destroyed! Time for monster meat!"
   end
+
+  if truck.get_hp > 0
+    puts "The truck attacks you for 2 Damage!"
+    player.set_hp(2)
+  end
+
+  if player.get_hp <= 0
+    puts "The truck supercharges its fiddly sprizzly wiggly chaotically magically railgun and overpowers you with a rainbow, by the POWER of grayskull"
+  else
+    puts "You have #{player.get_hp}HP"
+  end
+
 end
 
 # truck is destroyed, now can attack monsters
-while truck.monsters.length > 0 && truck.get_hp <= 0
+while truck.monsters.length > 0 && truck.get_hp <= 0 && player.get_hp > 0
   puts "You are fighting #{truck.monsters.length} Monsters"
+
   if truck.monsters.length > 1
     puts "Which monster do you want to attack?"
     select_input = gets.chomp
@@ -85,7 +112,6 @@ while truck.monsters.length > 0 && truck.get_hp <= 0
   end
 
   puts "You, a Paladin with 18 Charisma and 97 hitpoints, attack monster#{select_input} with your Helm of Disintegration, and your Half-elf mage is wielding his +5 holy avenger, causing: " + input + " Damage"
-  # UP NEXT: Check for error, replace the hashtag monster thingy and replace with monster placeholder
 
   truck.monsters.each do |monster|
     if monster.get_hp <= 0
@@ -97,6 +123,19 @@ while truck.monsters.length > 0 && truck.get_hp <= 0
   truck.monsters.each do |monster|
     puts "Remaining HP of #{monster}: #{monster.get_hp}"
   end
+
+  truck.monsters.each do |monster|
+    if player.get_hp > 0
+      puts "#{monster} attacks you for 3 damage!"
+      player.set_hp(3)
+    end
+  end
+
+  if player.get_hp > 0
+    puts "You have #{player.get_hp}HP"
+  else
+    puts "The monster horde struck you down!"
+  end
 end
 
-puts "done with game!"
+puts "Game over!"
