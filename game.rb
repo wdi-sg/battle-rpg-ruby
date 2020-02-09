@@ -10,6 +10,7 @@ class Monster
   def set_hp(damage)
     @hp = @hp - damage
   end
+
 end
 
 class Player
@@ -44,9 +45,6 @@ while monster_array.length > 0 do
     puts "how much damage do you want to do?"
     input = gets.chomp
     monster_array[chosen_monster.to_i - 1].set_hp input.to_i
-      if monster.get_hp == 0
-        monsters.delete_at(chosen_monster.to_i - 1)
-      end
   elsif (monster_array.length == 2)
     puts "Which monster do you wana kill? Choose 1 or 2"
     chosen_monster = gets.chomp
@@ -54,19 +52,22 @@ while monster_array.length > 0 do
     puts "how much damage do you want to do?"
     input = gets.chomp
     monster_array[chosen_monster.to_i - 1].set_hp input.to_i
-      if monster.get_hp == 0
-        monsters.delete_at(chosen_monster.to_i - 1)
-      end
   else
     puts "One monster left, you're quite skillful"
     chosen_monster = 1
     puts "how much damage do you want to do?"
     input = gets.chomp
     monster_array[chosen_monster.to_i - 1].set_hp input.to_i
-      if monster.get_hp == 0
-        monsters.delete_at(chosen_monster.to_i - 1)
-      end
 end
+    monster_array.each do |monster|
+    puts "#{monster} HP remaining: #{monster.get_hp}"
+    end
+    monster_array.each do |monster|
+    if monster.get_hp < 0
+      monster_array.delete_at(chosen_monster.to_i - 1)
+    end
+  end
+
 end
 
 puts "done with game!"
