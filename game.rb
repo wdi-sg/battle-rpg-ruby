@@ -63,6 +63,7 @@ player = Player.new
 
 # initialize truck
 truck = Truck.new
+
 # create monster instances
 puts "How many monsters should be in the game?"
 monster_count = gets.chomp
@@ -82,7 +83,7 @@ while truck.get_hp > 0 && player.get_hp > 0
   end
 
   if truck.get_hp > 0
-    puts "The truck attacks you for 2 Damage!"
+    puts "The truck rolls over you for 2 Damage!"
     player.set_hp(2)
   end
 
@@ -134,7 +135,7 @@ while truck.monsters.length > 0 && truck.get_hp <= 0 && player.get_hp > 0
   if player.get_hp > 0
     puts "You have #{player.get_hp}HP"
   else
-    puts "The monster horde struck you down!"
+    puts "The monsters slowly whittled away your strength. You can't hold you sword anymore, drop to your knees and just pray to the gods for help. Suddenly help arrives in the form of a beast plunging its fangs deep into your throat, at last ending your puny meaningless existence, always just trying to be stronger than others. You finally realize, that you probably should have stuck to selling lemonade for a living on that small town market square, marry your nice childhood friend, have children and go to church on sundays to pray to the glorious god of Sequel Query Language instead of venturing on this vain quest conquering the outlands of Ruby just to make your life easier. You fade, and hope that the Pizza will arrive soon, because your mum cannot be bothere to bring you dinner into the basement anymore."
   end
 end
 
