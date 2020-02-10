@@ -56,6 +56,7 @@ while i < monster_count do
       puts "which monster do you want to fight? Pick from the following options: "+ monster_id
       input_monster = gets.chomp.to_i
       while monsters[input_monster].get_hp > 0 do 
+        #while loop checks that if user inputs a monster with no more hp left (>0), then it stops execution and goes to done with game. 
         puts "how much damage do you want to do?"
           damage = gets.chomp
           monsters[input_monster].set_hp(damage.to_i) 
