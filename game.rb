@@ -23,12 +23,18 @@ end
 class Player
 end
 
-# Ask the player which monster they want to attack at the beginning of the turn. (add the prompt into the loop)
-# This improves the game by making multiple monsters.
 
-monsters = [ monster1 = Monster.new("monster1"), monster2 = Monster.new("monster2"), monster3 = Monster.new("monster3")]
+# At the beginning of the game ask the player how many monsters they would like to fight:
+# Use a loop to fill a dynamic number of monsters into the array before the game starts, using the monster_count variable.
 
-while monster1.get_hp >= 0 || monster2.get_hp >= 0 || monster3.get_hp >=0 do
+puts "how many monsters should be in the game?"
+monster_count = gets.chomp
+arrayLength = monster_count.to_i
+monsters = []
+monsterArr = (1..arrayLength).each { |i| "monster#{i}" = Monster.new("monster#{i}") }
+p monsters
+
+while "monster{i}".get_hp >= 0 do
   puts "choose a monster to attack: "
   monsterOptions = monsters.each {|option| print option.get_name, "," }
   response = gets.chomp
@@ -55,7 +61,4 @@ while monster1.get_hp >= 0 || monster2.get_hp >= 0 || monster3.get_hp >=0 do
       end
 end
 
-  # input = gets.chomp
-  # monster.set_hp input.to_i
-  # puts "monster has damage: "+monster.get_hp.to_s
 puts "done with game!"
