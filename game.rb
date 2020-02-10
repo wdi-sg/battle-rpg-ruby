@@ -189,6 +189,7 @@ while $monster_array.length > 0 && player.hp > 0 do
   puts
 end
 
+# Check if player won or lost
 if player.hp <= 0
   puts "You lose! Game over"
 else
